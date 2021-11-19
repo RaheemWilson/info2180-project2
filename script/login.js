@@ -1,10 +1,10 @@
 window.onload = function(){ 
-    fetchLoginForm()
+    fetchForm("form", "login")
 }
 
-function fetchLoginForm() { 
+function fetchForm(url, section) { 
     let container = document.querySelector(".container");
-    fetch('http://localhost/info2180-project2/php/login-form.php')
+    fetch(`http://localhost/info2180-project2/php/${url}.php?section=${section}`)
     .then(response => {
         if(response.ok){
             return response.text();
@@ -38,7 +38,7 @@ function processFormData(event){
     loginForm.set('status', 'login')
     loginForm.set("email", email)
     loginForm.set("password", password)
-    
+
     fetch('http://localhost/info2180-project2/php/process-form.php', {
         method: "POST",
         body: loginForm
@@ -53,8 +53,7 @@ function processFormData(event){
     })
     .then(data => {
         console.log(data)
-        container.innerHTML = ""
-        container.innerHTML = data["message"];
+        fetchForm("dashboard", "new_user")
     })
     .catch(err => {
         console.log(err);
