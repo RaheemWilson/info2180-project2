@@ -25,31 +25,28 @@ try {
 }
 
 
-
-
 #Queries done on the database
-$admin_details = $conn->query("SELECT users.email,users.password FROM `users`");
-$issue = $conn->query("SELECT * FROM `issues` WHERE 1");
-
+$user_details_tb = $conn->query("SELECT users.email,users.password FROM `users`");
+$issuetable = $conn->query("SELECT title, type, status, assigned_to, created FROM `issues` WHERE 1");
 
 #Tables fetched based on queries 
-$issue_Table = $issue->fetchAll(PDO::FETCH_ASSOC);
-$admin_details_tb = $admin_details->fetchAll(PDO::FETCH_ASSOC);
+$user_details = $user_details_tb->fetchAll(PDO::FETCH_ASSOC);
+$issue_table = $issuetable->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<?php #Checks if the admin login details match those in the database?>
-<?php foreach ($admin_details_tb as $login): ?>
-    <?php if ($email == $login["email"] && password_verify($userpassword, $login['password'])): ?>
-        <?php # The table as well as the button created by raheem should go here using built in include() function ?>
-        <table>
-          <thead>
-             <tr>
-                 <th scope="col"><?= "Title" ?></th>
-                 <th scope="col"><?= "Type"?></th>
-                 <th scope="col"><?= "Status" ?></th>
-                 <th scope="col"><?= "AssignedTo" ?></th>
-             </tr>
-          </thead>
-        </table>
-    <?php endif; ?>
+<?php #Checks if the login details entered by a user match those in the database?>
+<?php foreach ($user_details as $userdata): ?>
+    
+    <?php # checks login email and password for admin?>
+    <?php if ($email == $userdata['email'] && password_verify($userpassword, $userdata['password'])): ?>
+        
+        <?php include 'issues-table.php';?>
+        <?php include 'features-buttons.php'?>
+  
+    <?php else: ?>
+       <?php #this part should reload the login page if the user entry is wrong?>  
+        
+       <?php include 'login-form.php'?>
+    
+    <?php endif; ?>  
 <?php endforeach; ?>
