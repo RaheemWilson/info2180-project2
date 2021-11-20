@@ -1,5 +1,4 @@
 <?php
-function initialize_database(){
     $host = 'localhost';
     $username = 'project_2_user';
     $password = 'password123';
@@ -21,5 +20,5 @@ function initialize_database(){
 
     $sql = "INSERT INTO `users` (id, firstname, lastname, email, password, date_joined) VALUES (1,'Admin','Account','admin@project2.com','$hashed_pw',now())";
     $conn->query($sql);
-}
+
 ?>

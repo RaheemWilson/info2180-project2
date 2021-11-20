@@ -88,7 +88,7 @@ header("Access-Control-Allow-Headers: X-Requested-With");
                 <option value="critical">Critical</option>
             </select>
         </div>
-        <button type="submit" class="add-user-btn">Submit</button>
+        <button type="submit" class="submit-btn">Submit</button>
     </form>
     </div>
 <?php break; ?>
