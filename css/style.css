@@ -1,8 +1,8 @@
 body{
     margin: 0;
     padding: 0;
-    height: 100%;
-    max-height: 100%;
+    height: 100vh;
+    /* max-height: 100vh; */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
 		Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
@@ -14,11 +14,15 @@ body{
     color: #FFFFFF;
 }
 
+label{
+    font-weight: 600;
+}
+
 .login{
     width: 500px;
     height: 500px;
     border: 1px solid rgba(0,0,0, 0.25);
-    margin: 5% auto;
+    margin: 60px 70px;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -30,12 +34,19 @@ body{
     margin: 0 auto;
 }
 
-input{
+input, textarea, select{
     display: block;
     margin: 0 auto;
     width: 400px;
     height: 40px;
     border: 1px solid rgba(0,0,0, 0.25);
+    border-radius: 5px;
+    background-color: rgba(0,0,0, 0.05);
+}
+
+textarea{
+    height: 80px;
+    resize: none;
 }
 
 #login-form div, .submit-btn{
@@ -43,20 +54,62 @@ input{
     text-align: left;
 }
 
-/* #login-form label{
-   margin-left: 50px ;
-} */
-
 .submit-btn{
     height: 45px;
     color: #ffffff;
-    background-color: #000;
+    background-color: #1a69c8;
     width: 400px;
     text-align: center;
     border: none;
+    border-radius: 5px;
     font-size: 16px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
 		Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.content{
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 20px;
+}
+
+#side-nav{
+    width: 250px;
+    background-color: lightgray;
+    float: left;
+}
+
+#side-nav ul{
+    padding: 0;
+}
+
+#side-nav li{
+    display: flex;
+    list-style: none;
+    gap: 8px;
+    margin: 5px 10px;
+    cursor: pointer;
+}
+
+.container input, .container textarea, .container select{
+    margin: 10px 0;
+}
+
+.container select{
+    height: 45px;
+    width: 406px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+#create-issue-form .submit-btn, #add-user-form .submit-btn{
+    margin: 15px 0;
+    width: 200px;
+}
+
+#create-issue-form div, #add-user-form div{
+    margin: 20px 0;
 }
 
 

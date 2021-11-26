@@ -11,7 +11,7 @@ function checkEntry($email, $password, $conn){
 
     #Checks if the login details entered by a user match those in the database
     foreach ($user_details as $userdata){
-        if ($email == $userdata['email'] && password_verify($userpassword, $userdata['password'])){
+        if ($email == $userdata['email'] && password_verify($password, $userdata['password'])){
             return TRUE;
         }
         return FALSE;       

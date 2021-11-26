@@ -1,18 +1,5 @@
-<?php 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST');
-header("Access-Control-Allow-Headers: X-Requested-With");
-?>
-
-<?php
-    if(isset($_GET["section"])){
-        $section = $_GET["section"];
-    }
- ?>
-
 <?php switch($section): ?>
-<?php case 'login': ?>
-
+<?php case 'login': ?>   
     <div class="login">
         <div> 
             <h1>Welcome!</h1>
@@ -20,18 +7,18 @@ header("Access-Control-Allow-Headers: X-Requested-With");
             <form id="login-form" method="post">
                 <div>
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email"/>
+                    <input type="email" name="email" id="email" required/>
                 </div>
                 <div>
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" />
+                    <input type="password" name="password" id="password" required/>
                 </div>
                 <button type="submit" class="submit-btn">Login</button>
             </form>
         </div>
     </div>
 <?php break; ?>
-<?php case 'new_user': ?>
+<?php case 'add-user': ?>
 
     <div> 
     <h1>New User</h1>
@@ -46,7 +33,7 @@ header("Access-Control-Allow-Headers: X-Requested-With");
         </div>
         <div>
             <label for="password">Password</label>
-            <input type="password" name="password" id="password" />
+            <input type="password" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"/>
         </div>
         <div>
             <label for="email">Email</label>
@@ -56,7 +43,7 @@ header("Access-Control-Allow-Headers: X-Requested-With");
     </form>
     </div>
 <?php break; ?>
-<?php case 'issue' ?>
+<?php case 'new-issue' ?>
     <div> 
     <h1>Create Issue</h1>
     <form id="create-issue-form" method="post">
@@ -65,12 +52,12 @@ header("Access-Control-Allow-Headers: X-Requested-With");
             <input type="text" name="title" id="title"/>
         </div>
         <div>
-            <label for="description">Lastname</label>
+            <label for="description">Description</label>
             <textarea name="description" id="description" cols="30" rows="10"></textarea>
         </div>
         <div>
-            <label for="users">Assigned To</label>
-            <select name="users" id="users"></select>
+            <label for="assigned">Assigned To</label>
+            <select name="assigned" id="assigned"></select>
         </div>
         <div>
             <label for="type">Type</label>
@@ -93,5 +80,3 @@ header("Access-Control-Allow-Headers: X-Requested-With");
     </div>
 <?php break; ?>
 <?php endswitch; ?>
-
-

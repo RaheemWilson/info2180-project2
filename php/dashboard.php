@@ -1,4 +1,4 @@
-<aside>
+<aside id="side-nav">
     <ul>
         <li id="home">
             <img src="./assets/home_black_24dp.svg" alt="Home button">
@@ -12,7 +12,7 @@
             <img src="./assets/add_box_black_24dp.svg" alt="">
             <p>Add Issue</p>
         </li>
-        <li>
+        <li id="logout">
             <img src="./assets/power_settings_new_black_24dp.svg" alt="">
             <p>Logout</p>
         </li>

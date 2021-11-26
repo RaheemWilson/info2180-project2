@@ -9,10 +9,10 @@ USE bugme;
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL auto_increment,
-  `firstname` varchar(255) NOT NULL default '',
-  `lastname` varchar(255) NOT NULL default '',
-  `email` varchar(255) NOT NULL unique,
-  `password` varchar(255) NOT NULL default '',
+  `firstname` varchar(64) NOT NULL default '',
+  `lastname` varchar(64) NOT NULL default '',
+  `email` varchar(64) NOT NULL unique,
+  `password` varchar(64) NOT NULL default '',
   `date_joined` datetime NOT NULL default current_timestamp,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4080 DEFAULT CHARSET=utf8mb4;
