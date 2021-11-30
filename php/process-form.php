@@ -40,13 +40,12 @@ $issue_table = $issuetable->fetchAll(PDO::FETCH_ASSOC);
     <?php # checks login email and password for admin?>
     <?php if ($email == $userdata['email'] && password_verify($userpassword, $userdata['password'])): ?>
         
-        <?php include 'issues-table.php';?>
-        <?php include 'features-buttons.php'?>
+        <?php include 'features-buttons.php';?>
   
     <?php else: ?>
        <?php #this part should reload the login page if the user entry is wrong?>  
         
-       <?php include 'login-form.php'?>
+       <?php include 'login-form.php';?>
     
     <?php endif; ?>  
 <?php endforeach; ?>

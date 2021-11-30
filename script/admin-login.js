@@ -29,13 +29,12 @@ function addEvents(){
     console.log(submitBtn)
     submitBtn.addEventListener('click', processFormData)
 }
-
+                                                                           
 function processFormData(event){
     event.preventDefault()
     let email = document.querySelector("#email").value;
     let password = document.querySelector("#password").value;
     let container = document.querySelector(".container");
-
 
     let loginForm = new FormData()
     loginForm.set('status', 'login')
