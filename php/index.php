@@ -26,7 +26,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
           $email = $post['email'];
           $password = $post['password'];
           $result = checkEntry($email, $password, $conn);
-
           if($result){
             session_start();
             $_SESSION["useremail"] = $email;
@@ -36,8 +35,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
           }
       break;
       case "add-user":
-        $result = TRUE;
-        // $result = addUser($post)
+        //$result = TRUE;
+        $result = addUser($post, $conn);
         if($result){
           http_response_code(201);
           echo json_encode(array("message" => "User was succesfully added"));
@@ -48,8 +47,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         }
       break;
       case "new-issue":
-        $result = TRUE;
-        // $result = addNewIssue($post)
+        //$result = TRUE;
+        $result = addNewIssue($post, $conn);
         if($result){
           http_response_code(201);
           echo json_encode(array("message" => "Issue was succesfully added"));
