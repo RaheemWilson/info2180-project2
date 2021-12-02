@@ -46,21 +46,22 @@ function addNewIssue($post, $conn, $email){
     $priority = $post['priority'];
     $status = 'OPEN';
     $assigned_to = $post['assigned'];
+ 
     #Grab current users email address to get their ID from database for created by field in database
-    $assigned_id = $conn->query("SELECT id from users WHERE email = '$assigned_to'");
-    $id = $conn->query("SELECT id from users WHERE email = '$email'");
+    $id = $conn->query("SELECT id FROM `users`");
     
-    $asid = $assigned_id->fetchAll(PDO::FETCH_ASSOC);
+    
     $id = $id->fetchAll(PDO::FETCH_ASSOC);
+    $id = $id[0]['id'];
 
-    echo $id['id'];
-    echo implode("",$asid);
+    //echo $id['id'];
+    //echo implode("",$asid);
 
     //$assigned = $conn->query("SELECT id from users WHERE email = '$email'");
     //$id = $id->fetchAll(PDO::FETCH_ASSOC);
 
     #Prepare filters query from da' bad guys
-    $stmt = $conn->prepare("INSERT INTO `issues` (title, description, type, priority, status, assigned_to, created_by) VALUES ('$title', '$description', '$type', '$priority', '$status', '$asid', '$id')");
+    $stmt = $conn->prepare("INSERT INTO `issues` (title, description, type, priority, status, assigned_to, created_by) VALUES ('$title', '$description', '$type', '$priority', '$status', '$assigned_to', '$id')");
 
     #Result stores TRUE if query successfully executed
     $result = $stmt->execute();

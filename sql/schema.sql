@@ -40,6 +40,6 @@ CREATE TABLE `issues` (
   `assigned_to` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
   `created` datetime NOT NULL default current_timestamp,
-  `updated` datetime default NULL,
+  `updated` datetime default NULL default current_timestamp,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;

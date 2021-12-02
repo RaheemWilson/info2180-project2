@@ -6,7 +6,7 @@
    include_once "schema.php";
    
    $conn = initialiseconnection();
-   $user = $conn ->query("SELECT firstname, lastname  FROM `users` WHERE 1");
+   $user = $conn ->query("SELECT firstname, lastname, id  FROM `users` WHERE 1");
    $username = $user->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -72,7 +72,7 @@
             <label for="assigned">Assigned To</label>
             <select name="assigned" id="assigned">
             <?php foreach ($username  as $useroption): ?>
-                <option><?=$useroption['firstname']." ".$useroption['lastname']?></option>
+                <option value =<?=$useroption['id']?>><?=$useroption['firstname']." ".$useroption['lastname']?></option>
               <?php endforeach; ?>
             </select>
         </div>
