@@ -1,12 +1,20 @@
 <?php
-  session_start();
+    session_start();  
+    function sessionEmail($email){
+       $_SESSION["useremail"] = $email;
+       return $_SESSION["useremail"];
+    }
+?>
+
+<?php
   header('Access-Control-Allow-Origin: *');
   header('Access-Control-Allow-Methods: GET, POST');
   header("Access-Control-Allow-Headers: X-Requested-With");
   
   include_once "schema.php";
   include_once "process-form.php";
-  
+
+  $ses_email = "";
   $conn = initialiseDatabase();
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){
@@ -26,7 +34,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
           $password = $post['password'];
           $result = checkEntry($email, $password, $conn);
           if($result){
-            $_SESSION["useremail"] = $email;
+            $ses_email = sessionEmail($email);
             include "home.php";
           }else{
             echo "User not found";
@@ -46,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
       break;
       case "new-issue":
         //$result = TRUE;
-        $result = addNewIssue($post, $conn);
+        $result = addNewIssue($post, $conn, $ses_email);
         if($result){
           http_response_code(201);
           echo json_encode(array("message" => "Issue was succesfully added"));

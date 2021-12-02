@@ -1,6 +1,5 @@
+
 <?php
-session_start();
-echo $_SESSION["useremail"];
 function checkEntry($email, $password, $conn){
     #Queries done on the database
     $user_details_tb = $conn->query("SELECT users.email,users.password FROM `users`");
@@ -21,7 +20,6 @@ function checkEntry($email, $password, $conn){
 
 
 function addUser($post, $conn){
-    
     #Variables from form assigned.
     $firstname = $post['firstname'];
     $lastname = $post['lastname'];
@@ -41,10 +39,7 @@ function addUser($post, $conn){
 }
 
 
-function addNewIssue($post, $conn){
-   
-    $email = $_SESSION["useremail"];
-    var_dump($email);
+function addNewIssue($post, $conn, $email){
     $title = $post['title'];
     $description = $post['description'];
     $type = $post['type'];
@@ -52,15 +47,20 @@ function addNewIssue($post, $conn){
     $status = 'OPEN';
     $assigned_to = $post['assigned'];
     #Grab current users email address to get their ID from database for created by field in database
+    $assigned_id = $conn->query("SELECT id from users WHERE email = '$assigned_to'");
     $id = $conn->query("SELECT id from users WHERE email = '$email'");
+    
+    $asid = $assigned_id->fetchAll(PDO::FETCH_ASSOC);
     $id = $id->fetchAll(PDO::FETCH_ASSOC);
-    $id = $id[0]['id'];
+
+    echo $id['id'];
+    echo implode("",$asid);
 
     //$assigned = $conn->query("SELECT id from users WHERE email = '$email'");
     //$id = $id->fetchAll(PDO::FETCH_ASSOC);
 
     #Prepare filters query from da' bad guys
-    $stmt = $conn->prepare("INSERT INTO users (title, description, type, priority, status, assigned_to, created_by) VALUES ('$title', '$description', '$type', '$priority', '$status', '$assigned_to', '$id')");
+    $stmt = $conn->prepare("INSERT INTO `issues` (title, description, type, priority, status, assigned_to, created_by) VALUES ('$title', '$description', '$type', '$priority', '$status', '$asid', '$id')");
 
     #Result stores TRUE if query successfully executed
     $result = $stmt->execute();
