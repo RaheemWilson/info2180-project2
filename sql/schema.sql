@@ -15,7 +15,7 @@ CREATE TABLE `users` (
   `password` varchar(64) NOT NULL default '',
   `date_joined` datetime NOT NULL default current_timestamp,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4080 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
@@ -42,4 +42,4 @@ CREATE TABLE `issues` (
   `created` datetime NOT NULL default current_timestamp,
   `updated` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4080 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
