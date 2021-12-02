@@ -53,7 +53,6 @@ function addNewIssue($post, $conn, $email){
     $asid = $assigned_id->fetchAll(PDO::FETCH_ASSOC);
     $id = $id->fetchAll(PDO::FETCH_ASSOC);
 
-    echo $id['id'];
     echo implode("",$asid);
 
     //$assigned = $conn->query("SELECT id from users WHERE email = '$email'");
@@ -64,6 +63,16 @@ function addNewIssue($post, $conn, $email){
 
     #Result stores TRUE if query successfully executed
     $result = $stmt->execute();
+
+    return $result;
+}
+
+
+function issueReport($conn){
+    
+    $assigned_id = $conn->query("SELECT*from users WHERE 1");
+    $asid = $assigned_id->fetchAll(PDO::FETCH_ASSOC);
+    $id = $id->fetchAll(PDO::FETCH_ASSOC);
 
     return $result;
 }

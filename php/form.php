@@ -32,7 +32,6 @@
     </div>
 <?php break; ?>
 <?php case 'add-user': ?>
-
     <div> 
     <h1>New User</h1>
     <form id="add-user-form" method="post">
