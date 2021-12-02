@@ -1,11 +1,11 @@
 <table>
   <thead>
     <tr>
-         <th scope="col"><?= "Title" ?></th>
-         <th scope="col"><?= "Type"?></th>
-         <th scope="col"><?= "Status" ?></th>
-         <th scope="col"><?= "AssignedTo" ?></th>
-         <th scope="col"><?= "Created" ?></th>
+         <th scope="col">Title</th>
+         <th scope="col">Type</th>
+         <th scope="col" class="status">Status</th>
+         <th scope="col">Assigned To</th>
+         <th scope="col">Created</th>
     </tr>
   </thead>
   <tbody>
@@ -13,10 +13,15 @@
       <tr>
         <td><?= $issue_row['title']; ?></td> 
         <td><?= $issue_row['type']; ?></td> 
-        <td><?= $issue_row['status']; ?></td>  
+        <td class="status <?= $issue_row['status'] === "IN PROGRESS" ? "IN-PROGRESS" : $issue_row['status']?>">
+          <h3><?= $issue_row['status']; ?></h3>
+        </td>
         <td><?= $issue_row['assigned_to']; ?></td>
         <td><?= $issue_row['created']; ?></td>
       </tr>
     <?php endforeach; ?>
   </tbody>
 </table>
+
+<!-- rgb(27,106,201)
+rgb(45,165,98) -->

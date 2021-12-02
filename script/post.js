@@ -12,7 +12,6 @@ function processLoginData(event){
         password: password,
         status: "login"
     }
-
     fetch('http://localhost/info2180-project2/php/index.php', {
         method: "POST",
         body: JSON.stringify(user)
@@ -27,8 +26,8 @@ function processLoginData(event){
     })
     .then(data => {
         if(data.length  < 20){
-            console.log("hello")
-            fetchForm("index", "login")
+            fetchForm("login")
+            console.log("Hello")
         } else {
             container.innerHTML = data;
             addEvents()

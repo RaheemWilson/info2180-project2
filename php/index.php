@@ -7,6 +7,7 @@ include_once "schema.php";
 include_once "process-form.php";
 
 $conn = initialiseDatabase();
+$query = "";
 ?>
 
 <?php
@@ -14,7 +15,12 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
   if(isset($_GET["section"])){
     $section = $_GET["section"];
     include "form.php";
-  } 
+  }
+
+  // if(isset($_GET["query"])){
+  //   $query = $_GET["query"];
+  //   include 'issues-table.php';
+  // }
 } elseif($_SERVER["REQUEST_METHOD"] == "POST"){
   $post = json_decode(file_get_contents('php://input'), true);
 
@@ -37,7 +43,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
       break;
       case "add-user":
         $result = TRUE;
-        // $result = addUser($post)
+        // $result = addUser($post, $conn);
         if($result){
           http_response_code(201);
           echo json_encode(array("message" => "User was succesfully added"));
@@ -49,7 +55,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
       break;
       case "new-issue":
         $result = TRUE;
-        // $result = addNewIssue($post)
+        // $result = addNewIssue($post, $conn);
         if($result){
           http_response_code(201);
           echo json_encode(array("message" => "Issue was succesfully added"));
