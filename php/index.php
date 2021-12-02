@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <?php
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
@@ -41,13 +42,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
           }
       break;
       case "add-user":
-<<<<<<< HEAD
-        $result = TRUE;
-        // $result = addUser($post, $conn);
-=======
         //$result = TRUE;
         $result = addUser($post, $conn);
->>>>>>> origin/sql-implementation
         if($result){
           http_response_code(201);
           echo json_encode(array("message" => "User was succesfully added"));
@@ -58,13 +54,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         }
       break;
       case "new-issue":
-<<<<<<< HEAD
-        $result = TRUE;
-        // $result = addNewIssue($post, $conn);
-=======
         //$result = TRUE;
         $result = addNewIssue($post, $conn);
->>>>>>> origin/sql-implementation
         if($result){
           http_response_code(201);
           echo json_encode(array("message" => "Issue was succesfully added"));

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <?php
 
 function checkEntry($email, $password, $conn){
