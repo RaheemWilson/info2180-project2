@@ -1,15 +1,14 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST');
-header("Access-Control-Allow-Headers: X-Requested-With");
+  session_start();
+  header('Access-Control-Allow-Origin: *');
+  header('Access-Control-Allow-Methods: GET, POST');
+  header("Access-Control-Allow-Headers: X-Requested-With");
+  
+  include_once "schema.php";
+  include_once "process-form.php";
+  
+  $conn = initialiseDatabase();
 
-include_once "schema.php";
-include_once "process-form.php";
-
-$conn = initialiseDatabase();
-?>
-
-<?php
 if($_SERVER["REQUEST_METHOD"] == "GET"){
   if(isset($_GET["section"])){
     $section = $_GET["section"];
@@ -27,7 +26,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
           $password = $post['password'];
           $result = checkEntry($email, $password, $conn);
           if($result){
-            session_start();
             $_SESSION["useremail"] = $email;
             include "home.php";
           }else{

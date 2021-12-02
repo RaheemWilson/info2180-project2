@@ -85,15 +85,14 @@ function processIssueData(event){
 
     console.log(formElements)
     let issue = {}
-
     issue.status = "new-issue"
 
     for (let i = 0; i < formElements.length; i++) {
         if (["INPUT", "SELECT", "TEXTAREA"].includes(formElements[i].nodeName)) {
-            issue[formElements[i].name] = formElements[i].value;
+            issue[formElements[i].id] = formElements[i].value;
         }
     }
-
+    
     fetch('http://localhost/info2180-project2/php/index.php', {
         method: "POST",
         body: JSON.stringify(issue)
@@ -107,7 +106,7 @@ function processIssueData(event){
         }
     })
     .then(data => {
-        return data ? JSON.parse(data) : {}
+        console.log(data);
     })
     .then(res => {
         alert(res['message'])

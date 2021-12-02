@@ -30,5 +30,24 @@ function initialiseDatabase(){
         
     return $conn;
 }
+
+function initialiseconnection(){
+    $host = 'localhost';
+    $username = 'project_2_user';
+    $password = 'password123';
+    $dbname = 'bugme';
+
+    try {
+        $conn = new PDO(
+            'mysql:host=' . $host . ';dbname=' . $dbname,
+            $username,
+            $password
+        );
+    } catch (Exception $e) {
+        die($e->getMessage());
+    }
+    return $conn;
+}
+
     
 ?>
