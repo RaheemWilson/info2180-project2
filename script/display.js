@@ -161,7 +161,7 @@ async function displayIssue(id) {
                 </div>
                 <div>
                     <h3>Priority:</h3>
-                    <p>${currentIssue.prority}</p>
+                    <p>${currentIssue.priority}</p>
                 </div>
                 <div>
                     <h3>Status:</h3>
