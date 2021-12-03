@@ -1,5 +1,6 @@
 
 <?php
+session_start();
 function checkEntry($email, $password, $conn){
     #Queries done on the database
     $user_details_tb = $conn->query("SELECT users.email,users.password FROM `users`");
@@ -46,9 +47,12 @@ function addNewIssue($post, $conn, $email){
     $priority = $post['priority'];
     $status = 'OPEN';
     $assigned_to = $post['assigned'];
+    $newemail = $_SESSION["newemail"];
+
+    echo $newemail;
  
     #Grab current users email address to get their ID from database for created by field in database
-    $id = $conn->query("SELECT id FROM `users`");
+    $id = $conn->query("SELECT id FROM `users` WHERE email = '$newemail'");
     
     
     $id = $id->fetchAll(PDO::FETCH_ASSOC);

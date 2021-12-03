@@ -108,9 +108,6 @@ function processIssueData(event){
     .then(data => {
         console.log(data);
     })
-    .then(res => {
-        alert(res['message'])
-    })
     .catch(err => {
         console.log(err);
     })

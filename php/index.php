@@ -1,18 +1,12 @@
 <?php
-    session_start();  
-    function sessionEmail($email){
-       $_SESSION["useremail"] = $email;
-       return $_SESSION["useremail"];
-    }
-?>
+include_once "schema.php";
+include_once "process-form.php";
+include_once "session.php";
+  session_start();  
 
-<?php
   header('Access-Control-Allow-Origin: *');
   header('Access-Control-Allow-Methods: GET, POST');
   header("Access-Control-Allow-Headers: X-Requested-With");
-  
-  include_once "schema.php";
-  include_once "process-form.php";
 
   $ses_email = "";
   $conn = initialiseDatabase();
