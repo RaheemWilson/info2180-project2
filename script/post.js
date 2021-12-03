@@ -1,11 +1,10 @@
-import { fetchForm, addEvents } from './index.js'
+import { fetchPage } from './index.js'
 
 function processLoginData(event){
     event.preventDefault()
     let sideNav = document.getElementById("side-nav")
     let email = document.querySelector("#email").value
     let password = document.querySelector("#password").value
-    let container = document.querySelector(".container");
 
     let user = {
         email: email,
@@ -18,21 +17,26 @@ function processLoginData(event){
     })
     .then(response => {
         if(response.ok){
-            return response.text();
+            console.log(response)
+            return response.json();
         }
         else{
             throw new Error(`An error has occured: ${response.status}`);
         }
     })
     .then(data => {
-        if(data.length  < 20){
-            fetchForm("login")
-            console.log("Hello")
-        } else {
-            container.innerHTML = data;
-            addEvents()
+        console.log(data)
+        if(data["message"] === "User was succesfully logged in"){
+            fetchPage("home")
             sideNav.style.visibility = "visible"
         }
+        // if(data.length  < 20){
+        //     fetchForm("login")
+        //     console.log("Hello")
+        // } else {
+        //     container.innerHTML = data;
+        //     
+        // }
     })
     .catch(err => {
         console.log(err);
@@ -61,14 +65,11 @@ function processUserData(event){
     })
     .then(response => {
         if(response.ok){
-            return response.text();
+            return response.json();
         }
         else{
             throw new Error(`An error has occured: ${response.status}`);
         }
-    })
-    .then(data => {
-        return data ? JSON.parse(data) : {}
     })
     .then(res => {
         alert(res['message'])
@@ -84,15 +85,14 @@ function processIssueData(event){
 
     console.log(formElements)
     let issue = {}
-
     issue.status = "new-issue"
 
     for (let i = 0; i < formElements.length; i++) {
         if (["INPUT", "SELECT", "TEXTAREA"].includes(formElements[i].nodeName)) {
-            issue[formElements[i].name] = formElements[i].value;
+            issue[formElements[i].id] = formElements[i].value;
         }
     }
-
+    
     fetch('http://localhost/info2180-project2/php/index.php', {
         method: "POST",
         body: JSON.stringify(issue)
@@ -106,7 +106,7 @@ function processIssueData(event){
         }
     })
     .then(data => {
-        return data ? JSON.parse(data) : {}
+        console.log(data);
     })
     .then(res => {
         alert(res['message'])
@@ -117,5 +117,7 @@ function processIssueData(event){
 
 
 }
+
+
 
 export { processIssueData, processUserData, processLoginData };

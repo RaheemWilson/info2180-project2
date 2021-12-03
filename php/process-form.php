@@ -1,6 +1,4 @@
-<?php session_start(); ?>
 <?php
-
 function checkEntry($email, $password, $conn){
     #Queries done on the database
     $user_details_tb = $conn->query("SELECT users.email,users.password FROM `users`");
@@ -21,6 +19,7 @@ function checkEntry($email, $password, $conn){
 
 
 function addUser($post, $conn){
+    
     #Variables from form assigned.
     $firstname = $post['firstname'];
     $lastname = $post['lastname'];
@@ -41,15 +40,16 @@ function addUser($post, $conn){
 
 
 function addNewIssue($post, $conn){
+   
+    // $email = $_SESSION["useremail"];
+    // var_dump($email);
     $title = $post['title'];
     $description = $post['description'];
-    $type = $type['type'];
-    $priority = $priority['priority'];
+    $type = $post['type'];
+    $priority = $post['priority'];
     $status = 'OPEN';
     $assigned_to = $post['assigned'];
-
     #Grab current users email address to get their ID from database for created by field in database
-    $email = $_SESSION['useremail'];
     $id = $conn->query("SELECT id from users WHERE email = '$email'");
     $id = $id->fetchAll(PDO::FETCH_ASSOC);
     $id = $id[0]['id'];

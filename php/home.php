@@ -1,3 +1,5 @@
+
+
 <div>
     <div class="issue-header">
         <h1>Issues</h1>
@@ -11,32 +13,31 @@
             <button class="filter-btn">MY TICKETS</button>
         </div>
     </div>
-    <?php 
-        $issue_table = [
-            [
-                "title" => "Something ",
-                "type" => "Steve Rogers",
-                "status" => "OPEN",
-                "assigned_to" => "Recipient",
-                "created" => "date"
-            ],
-            [
-                "title" => "Something",
-                "type" => "Steve Rogers",
-                "status" => "CLOSED",
-                "assigned_to" => "Recipient",
-                "created" => "date"
-            ],
-            [
-                "title" => "Something",
-                "type" => "Steve Rogers",
-                "status" => "IN PROGRESS",
-                "assigned_to" => "Recipient",
-                "created" => "date"
-            ],
-        ];
-        include 'issues-table.php'; 
-    ?>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Type</th>
+                <th scope="col" class="status">Status</th>
+                <th scope="col">Assigned To</th>
+                <th scope="col">Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($issue_table as $issue_row): ?>
+            <tr>
+                <td><?= $issue_row['title']; ?></td> 
+                <td><?= $issue_row['type']; ?></td> 
+                <td class="status <?= $issue_row['status'] === "IN PROGRESS" ? "IN-PROGRESS" : $issue_row['status']?>">
+                <h3><?= $issue_row['status']; ?></h3>
+                </td>
+                <td><?= $issue_row['assigned_to']; ?></td>
+                <td><?= $issue_row['created']; ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+        
 </div>
 
 

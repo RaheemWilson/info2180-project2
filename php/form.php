@@ -1,3 +1,9 @@
+<?php
+   $user = $conn ->query("SELECT firstname, lastname  FROM `users` WHERE 1");
+   $username = $user->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+
 <?php switch($section): ?>
 <?php case 'login': ?>   
     <div class="login">
@@ -57,7 +63,11 @@
         </div>
         <div>
             <label for="assigned">Assigned To</label>
-            <select name="assigned" id="assigned"></select>
+            <select name="assigned" id="assigned">
+            <?php foreach ($username  as $useroption): ?>
+                <option><?=$useroption['firstname']." ".$useroption['lastname']?></option>
+              <?php endforeach; ?>
+            </select>
         </div>
         <div>
             <label for="type">Type</label>

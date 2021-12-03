@@ -1,17 +1,18 @@
-<?php session_start(); ?>
 <?php
+session_start();
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
 header("Access-Control-Allow-Headers: X-Requested-With");
+
 
 include_once "schema.php";
 include_once "process-form.php";
 
 $conn = initialiseDatabase();
 $query = "";
-?>
 
-<?php
+$_SESSION["useremail"] = "email";
+
 if($_SERVER["REQUEST_METHOD"] == "GET"){
   if(isset($_GET["section"])){
     $section = $_GET["section"];
@@ -34,11 +35,11 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
           $password = $post['password'];
           $result = checkEntry($email, $password, $conn);
           if($result){
-            session_start();
-            $_SESSION["useremail"] = $email;
-            include "home.php";
+            http_response_code(200);
+            echo json_encode(array("message" => "User was succesfully logged in"));
           }else{
-            echo "User not found";
+            http_response_code(500);
+            echo json_encode(array("message" => "User not found"));
           }
       break;
       case "add-user":

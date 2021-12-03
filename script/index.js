@@ -1,62 +1,53 @@
 import { processIssueData, processLoginData, processUserData } from './post.js'
+import { displayIssueForm, displayHomePage, displayAddUserPage } from './display.js'
 
 window.onload = function(){ 
     let sideNav = document.getElementById("side-nav")
     let buttons = document.querySelectorAll('#side-nav li')
-        buttons.forEach(button => {
-            console.log("run")
+    buttons.forEach(button => {
+        button.addEventListener('click', () =>{
             switch (button.id) {
-                // case "home":
-                //     break;
+                case "home":
+                    fetchPage("home")
+                    break;
                 case "add-user":
-                    button.addEventListener('click', () =>{
-                        fetchForm('add-user')
-                    })   
+                        fetchPage("add-user")
                     break;
                 case "new-issue":
-                    button.addEventListener('click', () =>{
-                        fetchForm('new-issue')
-                    })
+                        fetchPage("new-issue")
                     break;
-                // case "home":
-                    
-                //     break;
-            
                 default:
                     break;
-            }
+            }   
+        })
+        
     })
     sideNav.style.visibility = "hidden"
-    fetchForm("login")
+    addEvents()
 }
 
-function fetchForm(section) { 
+function fetchPage(page) { 
     let container = document.querySelector(".container");
-    fetch(`http://localhost/info2180-project2/php/index.php?section=${section}`)
-    .then(response => {
-        if(response.ok){
-            return response.text();
-        }
-        else{
-            throw new Error(`An error has occured: ${response.status}`);
-        }
-    })
-    .then(data => {
-        container.innerHTML = data;
-        addEvents()
-    })
-    .catch(err => {
-        console.log(err);
-    })
+    
+    if(page === "home"){
+        container.innerHTML = displayHomePage()
+    } else if(page === "add-user"){
+        container.innerHTML = displayAddUserPage()
+    } else {
+        container.innerHTML = displayIssueForm()
+    }
+
+    addEvents()
+
 }
 
 
 function addEvents(){
     let submitBtn = document.querySelector(".submit-btn")
     let form = document.getElementsByTagName("form")[0]
+    let container = document.querySelector(".container");
 
     if(form){
-
         switch (form.id) {
             case "login-form":
                 submitBtn.addEventListener('click', processLoginData)
@@ -71,9 +62,19 @@ function addEvents(){
                 break;
         }  
     }
+
+    if(container){
+        let issueBtn = document.getElementById("create-issue-btn")
+        if(issueBtn){
+            issueBtn.onclick = function(){
+                container.innerHTML = displayIssueForm()
+            }
+        }
+    }
+    
 }
 
-export { fetchForm, addEvents };
+export { fetchPage, addEvents };
 
 
 
