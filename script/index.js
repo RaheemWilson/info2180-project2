@@ -30,7 +30,10 @@ async function fetchPage(page) {
     let container = document.querySelector(".container");
     
     if(page === "home"){
-        container.innerHTML = displayHomePage()
+        displayHomePage()
+        .then(res => {
+            container.innerHTML = res
+        })
     } else if(page === "add-user"){
         container.innerHTML = displayAddUserPage()
     } else {

@@ -1,5 +1,4 @@
 <?php
-
 function checkEntry($email, $password, $conn){
     #Queries done on the database
     $user_details_tb = $conn->query("SELECT users.email,users.password, users.id FROM `users`");

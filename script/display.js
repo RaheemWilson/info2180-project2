@@ -1,3 +1,6 @@
+import { getIssues } from './query.js'
+
+
 async function displayIssueForm() {
     let res = await fetch(`http://localhost/info2180-project2/php/index.php?user=all`,
         {
@@ -50,7 +53,13 @@ async function displayIssueForm() {
     `
 }
 
-function displayHomePage(){
+async function displayHomePage(){
+    let res = await fetch(`http://localhost/info2180-project2/php/index.php?issue=all`,
+    {
+        method: "GET",
+    })
+    let issues = await res.json()
+    console.log(issues)
     return `
     <div>
         <div class="issue-header">

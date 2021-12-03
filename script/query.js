@@ -3,6 +3,6 @@ function getIssues() {
     {
         method: "GET",
     })
-    let users = await res.json()
-        console.log(users)
+    let issues = await res.json()
+    console.log(issues)
 }
