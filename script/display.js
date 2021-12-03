@@ -1,3 +1,5 @@
+import {getIssue} from './query.js'
+
 async function displayIssueForm() {
     let res = await fetch(`http://localhost/info2180-project2/php/index.php?user=all`,
         {
@@ -16,21 +18,21 @@ async function displayIssueForm() {
         <form id="create-issue-form" method="post">
             <div>
                 <label for="title">Title</label>
-                <input type="text" name="title" id="title"/>
+                <input type="text" name="title" id="title" required/>
             </div>
             <div>
                 <label for="description">Description</label>
-                <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                <textarea name="description" id="description" cols="30" rows="10" required></textarea>
             </div>
             <div>
                 <label for="assigned">Assigned To</label>
-                <select name="assigned" id="assigned">
+                <select name="assigned" id="assigned" required>
                     ${optionStr}
                 </select>
             </div>
             <div>
                 <label for="type">Type</label>
-                <select name="type" id="type">
+                <select name="type" id="type" required>
                     <option value="bug">Bug</option>
                     <option value="proposal">Proposal</option>
                     <option value="task">Task</option>
@@ -38,7 +40,7 @@ async function displayIssueForm() {
             </div>
             <div>
                 <label for="priority">Priority</label>
-                <select name="priority" id="priority">
+                <select name="priority" id="priority" required>
                     <option value="minor">Minor</option>
                     <option value="major">Major</option>
                     <option value="critical">Critical</option>
@@ -60,9 +62,9 @@ function displayHomePage(){
         <div class="filters">
             <span>Filter By:</span>
             <div class="btns">
-                <button class="filter-btn active">ALL</button>
-                <button class="filter-btn">OPEN</button>
-                <button class="filter-btn">MY TICKETS</button>
+                <button id="all" class="filter-btn active">ALL</button>
+                <button id="open" class="filter-btn">OPEN</button>
+                <button id="user" class="filter-btn">MY TICKETS</button>
             </div>
         </div>
         <table>
@@ -92,19 +94,19 @@ function displayAddUserPage() {
         <form id="add-user-form" method="post">
             <div>
                 <label for="firstname">Firstname</label>
-                <input type="text" name="firstname" id="firstname"/>
+                <input type="text" name="firstname" id="firstname" required/>
             </div>
             <div>
                 <label for="lastname">Lastname</label>
-                <input type="text" name="lastname" id="lastname"/>
+                <input type="text" name="lastname" id="lastname" required/>
             </div>
             <div>
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"/>
+                <input type="password" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required/>
             </div>
             <div>
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email"/>
+                <input type="email" name="email" id="email" required/>
             </div>
             <button type="submit" class="submit-btn">Submit</button>
         </form>
@@ -112,69 +114,91 @@ function displayAddUserPage() {
     `
 }
 
-function displayIssue(id) {
+async function displayIssue(id) {
+    let currentIssue = await getIssue(id)
 
+    if(currentIssue){
+        var options = {year: 'numeric', month: 'long', day: 'numeric' };
+        let dateCreated = new Date(currentIssue.created)
+        var createdDate = dateCreated.toLocaleDateString('en-US', options)
+        var createdTime = dateCreated.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+
+        var dateUpdated = new Date(currentIssue.updated)
+        var updatedDate = dateUpdated.toLocaleDateString('en-US', options)
+        var updatedTime = dateUpdated.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+        
+    }
     return `
     <div class="grid-container"> 
 
         <div class = box1>
-            <h1 id="xss" >XSS Vulnerabilty in Add User Form</h1>
-            <p id="edt">Issue #100</p>
+            <h1 id="xss" >${currentIssue.title}</h1>
+            <h4 id="edt">Issue #${currentIssue.id}</h4>
         </div>
         <div class = "box2">
             
-            <p>Energy consumption and generation are two pivotal challenges that have continually confronted Caribbean nations. The effects of these 
-            challenges are evident in the increasing cost for oil as well as domestic electricity rates in Caribbean countries. It is for these reasons 
-            and more why there is an overwhelming necessity for the transition away from fossil fuels and towards the realm of sustainable energy.
-            However, there are a few issues that hinder the transition towards renewables in many CARICOM member states.
-            One of the issues CARICOM member states face that hinder their transition to renewables is the uncertainty in the 
-            energy prices, as such projections are coherent regarding the oil and gas industry prices. As most of the costs for renewable energy are from 
-            the upfront expenses of building and installing solar and wind farms; questions about if the investment was worth it would have been raised. 
-            In 2017 the average cost to install solar systems was $2000 per kilowatt compared to $1000 per kilowatt for a new natural gas plant. This 
-            higher construction cost would make financial institutions perceive renewable energy as a risky investment compared to the coherent and stable 
-            cost of gas and oil with a lower construction cost for a power plant. One way of combating the issue of high installation prices for renewables 
-            is by using a method known as energy auctions. This is where countries ask for competitive bids for large-scale energy contracts (power plants).
-            The country then chooses the energy project developer with a contract that offers the lowest possible price.<br><br></p>
+            <p>
+            ${currentIssue.description}
+            <br><br>
+            </p>
 
             <div>
-                <p>> Issue created on November 1, 2019 at 4:30pm by Marsha Brady</p>
+                <p>> Issue created on ${createdDate} at ${createdTime} by ${currentIssue.created_by.firstname} ${currentIssue.created_by.lastname}</p>
             </div>
             <div>
-                <p>> Last updated on November 8, 2019 at 10:00am</p>
+                <p>> Last updated on ${updatedDate} at ${updatedTime}</p>
             </div>
         </div>
         <div class = "box3">
-            <section>
+            <div class="info">
                 <div>
                     <h3>Assigned To</h3>
-                    <p>Tom Brady</p>
+                    <p>${currentIssue.assigned_to.firstname} ${currentIssue.assigned_to.lastname}</p>
                 </div>
                 <div>
                     <h3>Type:</h3>
-                    <p>Proposal</p>
+                    <p>${currentIssue.type}</p>
                 </div>
                 <div>
                     <h3>Priority:</h3>
-                    <p>Major</p>
+                    <p>${currentIssue.prority}</p>
                 </div>
                 <div>
                     <h3>Status:</h3>
-                    <p>Open</p>
+                    <p>${currentIssue.status}</p>
                 </div>
-        
-                <div class="box4">
-                    <div>
-                        <button type="close" class="btn_close">Mark as Close</button>
-                    </div>
-                    <div>
-                        <button type="progress" class="btn_open">Mark In Progress</button>
-                    </div>
-                </div> 
-            </section>
+            </div>
+            <div>
+                <button id="btn_close">Mark as Close</button>
+            </div>
+            <div>
+                <button id="btn_progress">Mark In Progress</button>
+            </div>
         </div>   
 
     </div>`
 }
 
+function displayLogin(){
+    return `
+    <div class="login">
+        <div> 
+            <h1>Welcome!</h1>
+            <p id="form-desc">Please enter your login details to gain access to the BugMe Issue Tracker System.</p>
+            <form id="login-form" method="post">
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required/>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required/>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+        </div>
+    </div>
+    `
+}
 
-export { displayIssueForm, displayHomePage, displayAddUserPage, displayIssue }
+export { displayIssueForm, displayHomePage, displayAddUserPage, displayIssue, displayLogin }

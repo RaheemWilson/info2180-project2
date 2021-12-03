@@ -30,6 +30,9 @@ function processLoginData(event){
             fetchPage("home")
             sideNav.style.visibility = "visible"
         }
+        else {
+            alert("Invalid Login")
+        }
     })
     .catch(err => {
         console.log(err);
@@ -66,6 +69,14 @@ function processUserData(event){
     })
     .then(res => {
         alert(res['message'])
+        if(res['message'] == "User was succesfully added"){
+            for (let i = 0; i < formElements.length; i++) {
+                if (formElements[i].nodeName === "INPUT") {
+                    formElements[i].value = "";
+                }
+            }
+        }
+       
     })
     .catch(err => {
         console.log(err);
@@ -99,6 +110,14 @@ function processIssueData(event){
         }
     })
     .then(data => {
+        console.log(data)
+        if(data["message"] == "Issue was succesfully added"){
+            for (let i = 0; i < formElements.length; i++) {
+                if (["INPUT", "TEXTAREA"].includes(formElements[i].nodeName)) {
+                    formElements[i].value = "";
+                }
+            }
+        }
         alert(data["message"])
     })
     .catch(err => {

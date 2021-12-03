@@ -22,10 +22,10 @@ function checkEntry($email, $password, $conn){
 
 function addUser($post, $conn){
     #Variables from form assigned.
-    $firstname = $post['firstname'];
-    $lastname = $post['lastname'];
-    $email = $post['email'];
-    $psswd = $post['password'];
+    $firstname = filter_var(htmlspecialchars($post['firstname']), FILTER_SANITIZE_STRING);
+    $lastname = filter_var(htmlspecialchars($post['lastname']), FILTER_SANITIZE_STRING);
+    $email = filter_var(htmlspecialchars($post['email']), FILTER_SANITIZE_EMAIL);
+    $psswd = filter_var(htmlspecialchars($post['password']), FILTER_SANITIZE_STRING);
     
     #Hashing the user entered password before inserting into database
     $hashed_pass = password_hash($psswd, PASSWORD_DEFAULT);
@@ -42,8 +42,8 @@ function addUser($post, $conn){
 
 function addNewIssue($post, $conn){
    
-    $title = $post['title'];
-    $description = $post['description'];
+    $title = filter_var(htmlspecialchars($post['title']), FILTER_SANITIZE_STRING);
+    $description = filter_var(htmlspecialchars($post['description']), FILTER_SANITIZE_STRING);
     $type = $post['type'];
     $priority = $post['priority'];
     $status = 'OPEN';
@@ -52,7 +52,8 @@ function addNewIssue($post, $conn){
     $id = $_SESSION["userId"];
 
     #Prepare filters query from da' bad guys
-    $stmt = $conn->prepare("INSERT INTO `issues` (title, description, type, priority, status, assigned_to, created_by) VALUES ('$title', '$description', '$type', '$priority', '$status', $assigned_to, '$id')");
+    $stmt = $conn->prepare("INSERT INTO `issues` (title, description, type, priority, status, assigned_to, created_by, created, updated) 
+                            VALUES ('$title', '$description', '$type', '$priority', '$status', $assigned_to, '$id', SYSDATE(), SYSDATE())");
 
     #Result stores TRUE if query successfully executed
     $result = $stmt->execute();
