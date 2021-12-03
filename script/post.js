@@ -11,7 +11,7 @@ function processLoginData(event){
         password: password,
         status: "login"
     }
-    fetch('http://localhost/info2180-project2/php/login.php', {
+    fetch('http://localhost/info2180-project2/php/index.php', {
         method: "POST",
         body: JSON.stringify(user),
         withCredentials: true
@@ -19,25 +19,17 @@ function processLoginData(event){
     .then(response => {
         if(response.ok){
             console.log(response)
-            return response.text();
+            return response.json();
         }
         else{
             throw new Error(`An error has occured: ${response.status}`);
         }
     })
     .then(data => {
-        console.log(data)
-        // if(data["message"] === "User was succesfully logged in"){
+        if(data["message"] === "User was succesfully logged in"){
             fetchPage("home")
             sideNav.style.visibility = "visible"
-        // }
-        // if(data.length  < 20){
-        //     fetchForm("login")
-        //     console.log("Hello")
-        // } else {
-        //     container.innerHTML = data;
-        //     
-        // }
+        }
     })
     .catch(err => {
         console.log(err);
@@ -63,20 +55,17 @@ function processUserData(event){
     fetch('http://localhost/info2180-project2/php/index.php', {
         method: "POST",
         body: JSON.stringify(user),
-        withCredentials: true,
-        credentials: 'same-origin'
     })
     .then(response => {
         if(response.ok){
-            return response.text();
+            return response.json();
         }
         else{
             throw new Error(`An error has occured: ${response.status}`);
         }
     })
     .then(res => {
-        console.log(res)
-        // alert(res['message'])
+        alert(res['message'])
     })
     .catch(err => {
         console.log(err);
@@ -97,21 +86,20 @@ function processIssueData(event){
         }
     }
     
-    fetch('http://localhost/info2180-project2/php/issue.php', {
+    fetch('http://localhost/info2180-project2/php/index.php', {
         method: "POST",
         body: JSON.stringify(issue),
-        withCredentials: true
     })
     .then(response => {
         if(response.ok){
-            return response.text();
+            return response.json();
         }
         else{
             throw new Error(`An error has occured: ${response.status}`);
         }
     })
     .then(data => {
-        console.log(data);
+        alert(data["message"])
     })
     .catch(err => {
         console.log(err);

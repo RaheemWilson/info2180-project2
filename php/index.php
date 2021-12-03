@@ -1,5 +1,4 @@
 <?php
-// include_once "session.php";
 session_start();
 
 header('Access-Control-Allow-Origin: *');
@@ -11,8 +10,7 @@ include_once "process-form.php";
 include_once "queries.php";
 
 $conn = initialiseDatabase();
-$isLoggedIn = FALSE;
-$userEmail = "";
+
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){
   if(isset($_GET["user"])){
@@ -35,9 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
           $password = $post['password'];
           $result = checkEntry($email, $password, $conn);
           if($result){
-            // $isLoggedIn = TRUE;
-            // $userEmail = $email;
-            
+            $_SESSION["email"] = $email;
             http_response_code(200);
             echo json_encode(array("message" => "User was succesfully logged in"));
           }else{
@@ -71,12 +67,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     
   }
 }
-
-// if(!isset($_SESSION["userEmail"])){
-//   if($isLoggedIn){
-//     sessionEmail($userEmail);
-//   }
-// }
 
 
       

@@ -1,11 +1,8 @@
 <?php
-// include_once "session.php";
-
-
 
 function checkEntry($email, $password, $conn){
     #Queries done on the database
-    $user_details_tb = $conn->query("SELECT users.email,users.password FROM `users`");
+    $user_details_tb = $conn->query("SELECT users.email,users.password, users.id FROM `users`");
     $issuetable = $conn->query("SELECT title, type, status, assigned_to, created FROM `issues` WHERE 1");
 
     #Tables fetched based on queries 
@@ -15,12 +12,10 @@ function checkEntry($email, $password, $conn){
     #Checks if the login details entered by a user match those in the database
     foreach ($user_details as $userdata){
         if ($email == $userdata['email'] && password_verify($password, $userdata['password'])){
+            $_SESSION["userId"] = $userdata["id"];
             return TRUE;
         }       
     }
-    
-    session_start();
-    $_SESSION["email"] = "text";
     return FALSE;
 }
 
@@ -47,37 +42,20 @@ function addUser($post, $conn){
 
 function addNewIssue($post, $conn){
    
-    // $email = getEmail();
-    // // echo $email;
-    // var_dump($email);
     $title = $post['title'];
     $description = $post['description'];
     $type = $post['type'];
     $priority = $post['priority'];
     $status = 'OPEN';
     $assigned_to = intval($post['assigned']);
- 
-    session_start();
-    $user = $_SESSION["email"];
-    var_dump($user);
-    #Grab current users email address to get their ID from database for created by field in database
-    // $id = $conn->query("SELECT id FROM `users`");
-    
-    
-    // $id = $id->fetchAll(PDO::FETCH_ASSOC);
-    // $id = $id[0]['id'];
 
-    //echo $id['id'];
-    //echo implode("",$asid);
-
-    //$assigned = $conn->query("SELECT id from users WHERE email = '$email'");
-    //$id = $id->fetchAll(PDO::FETCH_ASSOC);
+    $id = $_SESSION["userId"];
 
     #Prepare filters query from da' bad guys
-    // $stmt = $conn->prepare("INSERT INTO `issues` (title, description, type, priority, status, assigned_to, created_by) VALUES ('$title', '$description', '$type', '$priority', '$status', '$assigned_to', '$id')");
+    $stmt = $conn->prepare("INSERT INTO `issues` (title, description, type, priority, status, assigned_to, created_by) VALUES ('$title', '$description', '$type', '$priority', '$status', $assigned_to, '$id')");
 
-    // #Result stores TRUE if query successfully executed
-    // $result = $stmt->execute();
+    #Result stores TRUE if query successfully executed
+    $result = $stmt->execute();
 
     return TRUE;
 }
