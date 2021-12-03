@@ -1,5 +1,6 @@
 import { processIssueData, processLoginData, processUserData } from './post.js'
-import { displayIssueForm, displayHomePage, displayAddUserPage } from './display.js'
+import { displayIssueForm, displayHomePage, displayAddUserPage, displayIssue } from './display.js'
+import {getIssues} from './query.js'
 
 window.onload = function(){ 
     let sideNav = document.getElementById("side-nav")
@@ -26,15 +27,41 @@ window.onload = function(){
     addEvents()
 }
 
-async function fetchPage(page) { 
+async function fetchPage(page, id) { 
     let container = document.querySelector(".container");
     
     if(page === "home"){
         container.innerHTML = displayHomePage()
+        let issues = await getIssues()
+        console.log(typeof issues)
+        let tableData = ""
+        issues.forEach(issue =>{
+            tableData += `
+            <tr>
+                <td>#${issue.id} <button class="issue" id=${issue.id}>${issue.title}</button></td> 
+                <td>${issue.type}</td> 
+                <td class="status ${issue.status === "IN PROGRESS" ? "IN-PROGRESS" : issue.status}">
+                <h3>${issue.status}</h3>
+                </td>
+                <td>${issue.assigned_to}</td>
+                <td>${issue.created.split(" ")[0]}</td>
+            </tr> `
+        })
+        let tableBody = document.getElementById('table-body')
+        tableBody.innerHTML = tableData
+
+        let buttons = document.querySelectorAll("td button")
+
+        buttons.forEach(button => {
+            button.addEventListener('click', handleIssue)
+        })
+        
     } else if(page === "add-user"){
         container.innerHTML = displayAddUserPage()
-    } else {
+    } else if(page === "new-issue") {
         container.innerHTML = await displayIssueForm()
+    } else {
+        container.innerHTML = displayIssue(id)
     }
 
     addEvents()
@@ -77,7 +104,11 @@ function addEvents(){
     
 }
 
-export { fetchPage, addEvents };
+function handleIssue(event) {
+    fetchPage('issue', event.target.id)
+}
+
+export { fetchPage, addEvents, handleIssue };
 
 
 

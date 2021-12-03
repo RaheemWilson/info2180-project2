@@ -6,4 +6,10 @@ function getUsers($conn){
 
     return $username;
 }
+
+function getIssues ($conn){
+    $results = $conn->query("SELECT * FROM `issues`");
+    $issues = $results->fetchAll(PDO::FETCH_ASSOC);
+    return $issues;
+}
 ?>
