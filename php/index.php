@@ -1,48 +1,50 @@
 <?php
+// include_once "session.php";
 session_start();
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
 header("Access-Control-Allow-Headers: X-Requested-With");
 
-
 include_once "schema.php";
 include_once "process-form.php";
+include_once "queries.php";
 
 $conn = initialiseDatabase();
-$query = "";
-
-$_SESSION["useremail"] = "email";
+$isLoggedIn = FALSE;
+$userEmail = "";
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){
-  if(isset($_GET["section"])){
-    $section = $_GET["section"];
-    include "form.php";
+  if(isset($_GET["user"])){
+    if($_GET["user"] == "all"){
+      $users = getUsers($conn);
+      http_response_code(200);
+      echo json_encode($users);
+    }
   }
 
-  // if(isset($_GET["query"])){
-  //   $query = $_GET["query"];
-  //   include 'issues-table.php';
-  // }
+  
 } elseif($_SERVER["REQUEST_METHOD"] == "POST"){
   $post = json_decode(file_get_contents('php://input'), true);
 
   if(isset($post)){
     $cmd=$post['status'];
 
-    switch ($cmd) {
-      case "login":
+      if($cmd == "login"){
           $email = $post['email'];
           $password = $post['password'];
           $result = checkEntry($email, $password, $conn);
           if($result){
+            // $isLoggedIn = TRUE;
+            // $userEmail = $email;
+            
             http_response_code(200);
             echo json_encode(array("message" => "User was succesfully logged in"));
           }else{
             http_response_code(500);
             echo json_encode(array("message" => "User not found"));
           }
-      break;
-      case "add-user":
+      } elseif($cmd == "add-user"){
         //$result = TRUE;
         $result = addUser($post, $conn);
         if($result){
@@ -53,8 +55,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
           http_response_code(500);
           echo json_encode(array("message" => "User not created"));
         }
-      break;
-      case "new-issue":
+      }
+      elseif($cmd == "new-issue"){
         //$result = TRUE;
         $result = addNewIssue($post, $conn);
         if($result){
@@ -65,10 +67,18 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
           http_response_code(500);
           echo json_encode(array("message" => "Issue not created"));
         }
-      break;
-    }
+      }
+    
   }
 }
+
+// if(!isset($_SESSION["userEmail"])){
+//   if($isLoggedIn){
+//     sessionEmail($userEmail);
+//   }
+// }
+
+
       
 
 

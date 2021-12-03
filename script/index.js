@@ -26,7 +26,7 @@ window.onload = function(){
     addEvents()
 }
 
-function fetchPage(page) { 
+async function fetchPage(page) { 
     let container = document.querySelector(".container");
     
     if(page === "home"){
@@ -34,7 +34,7 @@ function fetchPage(page) {
     } else if(page === "add-user"){
         container.innerHTML = displayAddUserPage()
     } else {
-        container.innerHTML = displayIssueForm()
+        container.innerHTML = await displayIssueForm()
     }
 
     addEvents()

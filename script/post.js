@@ -11,14 +11,15 @@ function processLoginData(event){
         password: password,
         status: "login"
     }
-    fetch('http://localhost/info2180-project2/php/index.php', {
+    fetch('http://localhost/info2180-project2/php/login.php', {
         method: "POST",
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
+        withCredentials: true
     })
     .then(response => {
         if(response.ok){
             console.log(response)
-            return response.json();
+            return response.text();
         }
         else{
             throw new Error(`An error has occured: ${response.status}`);
@@ -26,10 +27,10 @@ function processLoginData(event){
     })
     .then(data => {
         console.log(data)
-        if(data["message"] === "User was succesfully logged in"){
+        // if(data["message"] === "User was succesfully logged in"){
             fetchPage("home")
             sideNav.style.visibility = "visible"
-        }
+        // }
         // if(data.length  < 20){
         //     fetchForm("login")
         //     console.log("Hello")
@@ -61,18 +62,21 @@ function processUserData(event){
     
     fetch('http://localhost/info2180-project2/php/index.php', {
         method: "POST",
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
+        withCredentials: true,
+        credentials: 'same-origin'
     })
     .then(response => {
         if(response.ok){
-            return response.json();
+            return response.text();
         }
         else{
             throw new Error(`An error has occured: ${response.status}`);
         }
     })
     .then(res => {
-        alert(res['message'])
+        console.log(res)
+        // alert(res['message'])
     })
     .catch(err => {
         console.log(err);
@@ -93,9 +97,10 @@ function processIssueData(event){
         }
     }
     
-    fetch('http://localhost/info2180-project2/php/index.php', {
+    fetch('http://localhost/info2180-project2/php/issue.php', {
         method: "POST",
-        body: JSON.stringify(issue)
+        body: JSON.stringify(issue),
+        withCredentials: true
     })
     .then(response => {
         if(response.ok){
@@ -107,9 +112,6 @@ function processIssueData(event){
     })
     .then(data => {
         console.log(data);
-    })
-    .then(res => {
-        alert(res['message'])
     })
     .catch(err => {
         console.log(err);

@@ -1,5 +1,15 @@
-function displayIssueForm() {
-    
+async function displayIssueForm() {
+    let res = await fetch(`http://localhost/info2180-project2/php/index.php?user=all`,
+        {
+            method: "GET",
+        })
+    let users = await res.json()
+        console.log(users)
+    let optionStr = ""
+    users.forEach(user => {
+        optionStr += `<option value=${user.id}>${user.firstname} ${user.lastname}</option>`
+    });
+
     return `
         <div> 
         <h1>Create Issue</h1>
@@ -15,6 +25,7 @@ function displayIssueForm() {
             <div>
                 <label for="assigned">Assigned To</label>
                 <select name="assigned" id="assigned">
+                    ${optionStr}
                 </select>
             </div>
             <div>
@@ -40,7 +51,6 @@ function displayIssueForm() {
 }
 
 function displayHomePage(){
-    fetch
     return `
     <div>
         <div class="issue-header">
