@@ -67,7 +67,10 @@ function addEvents(){
         let issueBtn = document.getElementById("create-issue-btn")
         if(issueBtn){
             issueBtn.onclick = function(){
-                container.innerHTML = displayIssueForm()
+                displayIssueForm()
+                .then(res => {
+                    container.innerHTML = res
+                })
             }
         }
     }

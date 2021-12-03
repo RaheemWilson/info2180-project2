@@ -19,6 +19,12 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
       http_response_code(200);
       echo json_encode($users);
     }
+  } elseif(isset($_GET["issue"])){
+    if($_GET["user"] == "all"){
+      $issues = getIssues($conn);
+      http_response_code(200);
+      echo json_encode($issues);
+    }
   }
 
   
