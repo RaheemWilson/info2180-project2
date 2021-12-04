@@ -32,7 +32,7 @@ UNLOCK TABLES;*/
 DROP TABLE IF EXISTS `issues`;
 CREATE TABLE `issues` (
   `id` int(11) NOT NULL auto_increment,
-  `title` varchar(20) NOT NULL default '',
+  `title` varchar(50) NOT NULL default '',
   `description` text NOT NULL default '',
   `type` varchar(20) NOT NULL default '',
   `priority` varchar(35) NOT NULL default '',
