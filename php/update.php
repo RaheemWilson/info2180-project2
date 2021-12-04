@@ -1,4 +1,6 @@
 <?php 
+//Handles PATCH request to update issue status
+
 function updateStatus($conn, $data){
     $status = $data["status"];
     $id = $data["_id"];

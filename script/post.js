@@ -1,3 +1,5 @@
+//This module handles all the POST request sent to the server
+
 import { fetchPage } from './index.js'
 
 function processLoginData(event){
@@ -5,7 +7,8 @@ function processLoginData(event){
     let sideNav = document.getElementById("side-nav")
     let email = document.querySelector("#email").value
     let password = document.querySelector("#password").value
-
+    let error = document.getElementById("error")
+    
     let user = {
         email: email,
         password: password,
@@ -31,30 +34,29 @@ function processLoginData(event){
             sideNav.style.visibility = "visible"
         }
         else {
-            alert("Invalid Login")
+            error.innerHTML = "Incorrect login details"
         }
     })
     .catch(err => {
         console.log(err);
     })
+
+    
 }
 
 function processUserData(event){
     event.preventDefault()
     let formElements = document.getElementById("add-user-form").elements;
 
-    console.log(formElements)
     let user = {}
 
     user.status = "add-user"
-
     for (let i = 0; i < formElements.length; i++) {
         if (formElements[i].nodeName === "INPUT") {
             user[formElements[i].id] = formElements[i].value;
         }
     }
 
-    
     fetch('http://localhost/info2180-project2/php/index.php', {
         method: "POST",
         body: JSON.stringify(user),
@@ -76,11 +78,12 @@ function processUserData(event){
                 }
             }
         }
-       
+        
     })
     .catch(err => {
         console.log(err);
     })
+   
 
 }
 function processIssueData(event){
@@ -124,9 +127,6 @@ function processIssueData(event){
         console.log(err);
     })
 
-
 }
-
-
 
 export { processIssueData, processUserData, processLoginData };

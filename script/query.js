@@ -1,3 +1,4 @@
+//This module handles all the GET and PATCH request to server
 async function getIssues() {
     let res = await fetch(`http://localhost/info2180-project2/php/index.php?issues=all`,
     {
@@ -41,8 +42,7 @@ async function updateIssue(statusChange, id) {
         method: "PATCH",
         body: JSON.stringify({ status : statusChange, _id : id })
     })
-    let issue = await res.text()
-    console.log(issue)
+    let issue = await res.json()
     return issue;
 }
 

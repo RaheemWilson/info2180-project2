@@ -51,7 +51,7 @@ function addNewIssue($post, $conn){
 
     $id = $_SESSION["userId"];
 
-    #Prepare filters query from da' bad guys
+    #Prepare filters query
     $stmt = $conn->prepare("INSERT INTO `issues` (title, description, type, priority, status, assigned_to, created_by, created, updated) 
                             VALUES ('$title', '$description', '$type', '$priority', '$status', $assigned_to, '$id', SYSDATE(), SYSDATE())");
 

@@ -1,3 +1,4 @@
+//Main module that loads event when a particular page is displayed
 import { processIssueData, processLoginData, processUserData } from './post.js'
 import { displayIssueForm, displayHomePage, displayAddUserPage, displayIssue, displayLogin } from './display.js'
 import { getIssues, getIssuesOpen, getIssuesUser, updateIssue } from './query.js'
@@ -77,13 +78,13 @@ function addEvents(){
     if(form){
         switch (form.id) {
             case "login-form":
-                submitBtn.addEventListener('click', processLoginData)
+                form.addEventListener('submit', processLoginData)
                 break;
             case "add-user-form":
-                submitBtn.addEventListener('click', processUserData)
+                form.addEventListener('submit', processUserData)
                 break;
             case "create-issue-form":
-                submitBtn.addEventListener('click', processIssueData)
+                form.addEventListener('submit', processIssueData)
                 break;
             default:
                 break;

@@ -1,4 +1,5 @@
 <?php
+//Handles get requests and retrieves data from the database.
 
 function getUsers($conn){
     $user = $conn ->query("SELECT firstname, lastname, id  FROM `users` WHERE 1");

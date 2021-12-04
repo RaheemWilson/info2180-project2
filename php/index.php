@@ -1,4 +1,5 @@
 <?php
+//Dispatches the GET POST and PATCH request sent from the client
 session_start();
 
 header('Access-Control-Allow-Origin: *');
@@ -105,7 +106,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
   }
 } elseif($_SERVER["REQUEST_METHOD"] == "PATCH"){
   $post = json_decode(file_get_contents('php://input'), true);
-  // echo json_encode($post);
   $result = updateStatus($conn, $post);
   if($result){
     http_response_code(200);

@@ -1,4 +1,6 @@
 <?php
+//Sets up database
+
 function initialiseDatabase(){
     $host = 'localhost';
     $username = 'project_2_user';

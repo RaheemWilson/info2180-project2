@@ -21,10 +21,6 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-/*LOCK TABLES `users` WRITE;
-INSERT INTO `users` VALUES (1,'Admin','Account','admin@project2.com','password123',now());
-UNLOCK TABLES;*/
-
 --
 -- Table structure for table `issues`
 --

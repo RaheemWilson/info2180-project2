@@ -1,3 +1,4 @@
+//This module handles all the pages that being displayed
 import {getIssue} from './query.js'
 
 async function displayIssueForm() {
@@ -33,17 +34,17 @@ async function displayIssueForm() {
             <div>
                 <label for="type">Type</label>
                 <select name="type" id="type" required>
-                    <option value="bug">Bug</option>
-                    <option value="proposal">Proposal</option>
-                    <option value="task">Task</option>
+                    <option value="Bug">Bug</option>
+                    <option value="Proposal">Proposal</option>
+                    <option value="Task">Task</option>
                 </select>
             </div>
             <div>
                 <label for="priority">Priority</label>
                 <select name="priority" id="priority" required>
-                    <option value="minor">Minor</option>
-                    <option value="major">Major</option>
-                    <option value="critical">Critical</option>
+                    <option value="Minor">Minor</option>
+                    <option value="Major">Major</option>
+                    <option value="Critical">Critical</option>
                 </select>
             </div>
             <button type="submit" class="submit-btn">Submit</button>
@@ -94,19 +95,25 @@ function displayAddUserPage() {
         <form id="add-user-form" method="post">
             <div>
                 <label for="firstname">Firstname</label>
-                <input type="text" name="firstname" id="firstname" required/>
+                <input type="text" name="firstname" id="firstname" required="required"/>
             </div>
             <div>
                 <label for="lastname">Lastname</label>
-                <input type="text" name="lastname" id="lastname" required/>
+                <input type="text" name="lastname" id="lastname" required="required"/>
             </div>
             <div>
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required/>
+                <input 
+                    type="password" 
+                    name="password" id="password" 
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+                    required="required"
+                    title="Password must have at least one number and one letter, and one captial letter, and at least 8 or more characters"
+                />
             </div>
             <div>
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" required/>
+                <input type="email" name="email" id="email" required="required"/>
             </div>
             <button type="submit" class="submit-btn">Submit</button>
         </form>
@@ -161,7 +168,7 @@ async function displayIssue(id) {
                 </div>
                 <div>
                     <h3>Priority:</h3>
-                    <p>${currentIssue.prority}</p>
+                    <p>${currentIssue.priority}</p>
                 </div>
                 <div>
                     <h3>Status:</h3>
@@ -196,6 +203,7 @@ function displayLogin(){
                 </div>
                 <button type="submit" class="submit-btn">Login</button>
             </form>
+            <div id="error"></div>
         </div>
     </div>
     `
